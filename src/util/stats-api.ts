@@ -1,6 +1,6 @@
 import urlJoin from "url-join";
 
-const BASE_URL = "https://apinew.oksii.lol/api/v2/stats/etl";
+const BASE_URL = "https://api.oksii.lol/api/v2/stats/etl";
 
 export const statsApi = {
   async fetchGroups() {

@@ -35,7 +35,10 @@ const teams = aggregateRoundStats(data);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
   }
 </style>
-<Layout title={`ETL Stats - Group ${groupId}`}>
+<Layout
+  title={`ETL Stats - Group ${groupId}`}
+  description={`ETL Stats - Group ${groupId}`}
+>
   <main>
     <h1>Group {groupId}</h1>
     <div class="tables">

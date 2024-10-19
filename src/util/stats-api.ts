@@ -64,31 +64,31 @@ export type GroupDetails = {
       instance: string;
     };
     winner: "alpha" | "beta";
-  };
-  rounds: Array<{
-    round_filename: string;
-    round_data: {
-      round_info: {
-        defenderteam: number;
-        servername: string;
-        matchID: string;
-        round: number;
-        nextTimeLimit: string;
-        timelimit: string;
-        mapname: string;
-        config: string;
-        winnerteam: number;
+    rounds: Array<{
+      round_filename: string;
+      round_data: {
+        round_info: {
+          defenderteam: number;
+          servername: string;
+          matchID: string;
+          round: number;
+          nextTimeLimit: string;
+          timelimit: string;
+          mapname: string;
+          config: string;
+          winnerteam: number;
+        };
+        player_stats: Record<
+          string,
+          {
+            name: string;
+            rounds: string;
+            weaponStats: string[];
+            team: string;
+            guid: string;
+          }
+        >;
       };
-      player_stats: Record<
-        string,
-        {
-          name: string;
-          rounds: string;
-          weaponStats: string[];
-          team: string;
-          guid: string;
-        }
-      >;
-    };
-  }>;
+    }>;
+  };
 };

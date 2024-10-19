@@ -1,21 +1,24 @@
 ---
 import { statsApi } from "../../util/stats-api";
 import { getMatchSize } from "../../util/getMatchSize.ts";
+import Layout from "../../layouts/Layout.astro";
 const data = await statsApi.fetchGroups();
 ---
 
-<main>
-  <h1>Groups</h1>
-  <ul>
-    {
-      data.map((group) => (
-        <li>
-          <a href={`/groups/${group.match_id}`}>
-            {group.match_id} - {getMatchSize(group.size)} -{" "}
-            {group.maps.join(", ")}
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-</main>
+<Layout title="ETL Stats">
+  <main>
+    <h1>Groups</h1>
+    <ul>
+      {
+        data.map((group) => (
+          <li>
+            <a href={`/groups/${group.match_id}`}>
+              {group.match_id} - {getMatchSize(group.size)} -{" "}
+              {group.maps.join(", ")}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Layout>

@@ -11,20 +11,32 @@ interface Props {
 const { name, weaponStats } = Astro.props;
 ---
 
+<style>
+  td,
+  tr {
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-collapse: collapse;
+  }
+
+  td {
+    padding: 6px;
+  }
+
+  .name-part {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+  }
+</style>
+
 <tr>
   <td>
-    <details>
-      <summary>
-        {
-          getColoredNameParts(name).map(({ color, text }) => (
-            <span class="name-part" style={{ color }}>
-              {text}
-            </span>
-          ))
-        }
-        <td>{getTotalKills(weaponStats)}</td>
-        <td>{getTotalDeaths(weaponStats)}</td>
-      </summary>
-    </details>
+    {
+      getColoredNameParts(name).map(({ color, text }) => (
+        <span class="name-part" style={{ color }}>
+          {text}
+        </span>
+      ))
+    }
   </td>
+  <td>{getTotalKills(weaponStats)}</td>
+  <td>{getTotalDeaths(weaponStats)}</td>
 </tr>

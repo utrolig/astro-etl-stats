@@ -1,10 +1,11 @@
 ---
-import { statsApi } from "../../util/stats-api.ts";
-import { getMatchSize } from "../../util/getMatchSize.ts";
-import { aggregateRoundStats } from "../../util/aggregateRoundStats";
-import { getTotalKills, getTotalDeaths } from "../../util/weaponUtils.ts";
-import { getColoredNameParts } from "../../util/coloredNames.ts";
-import Layout from "../../layouts/Layout.astro";
+import { statsApi } from "../../../util/stats-api.ts";
+import { getMatchSize } from "../../../util/getMatchSize.ts";
+import { aggregateRoundStats } from "../../../util/aggregateRoundStats";
+import { getTotalKills, getTotalDeaths } from "../../../util/weaponUtils.ts";
+import { getColoredNameParts } from "../../../util/coloredNames.ts";
+import Layout from "../../../layouts/Layout.astro";
+import PlayerRow from "../../../components/player-row/player-row.astro";
 
 const { groupId } = Astro.params;
 const data = await statsApi.fetchGroupDetails(Number(groupId));
@@ -81,17 +82,7 @@ Astro.locals.cache(oneHourInSeconds);
         </tr>
         {
           teams.alpha.players.map((player) => (
-            <tr>
-              <td>
-                {getColoredNameParts(player.name).map(({ color, text }) => (
-                  <span class="name-part" style={{ color }}>
-                    {text}
-                  </span>
-                ))}
-              </td>
-              <td>{getTotalKills(player.weaponStats)}</td>
-              <td>{getTotalDeaths(player.weaponStats)}</td>
-            </tr>
+            <PlayerRow name={player.name} weaponStats={player.weaponStats} />
           ))
         }
       </table>
@@ -103,17 +94,7 @@ Astro.locals.cache(oneHourInSeconds);
         </tr>
         {
           teams.beta.players.map((player) => (
-            <tr>
-              <td>
-                {getColoredNameParts(player.name).map(({ color, text }) => (
-                  <span class="name-part" style={{ color }}>
-                    {text}
-                  </span>
-                ))}
-              </td>
-              <td>{getTotalKills(player.weaponStats)}</td>
-              <td>{getTotalDeaths(player.weaponStats)}</td>
-            </tr>
+            <PlayerRow name={player.name} weaponStats={player.weaponStats} />
           ))
         }
       </table>

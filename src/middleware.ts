@@ -10,13 +10,16 @@ const cache = new Map<Path, ICachedResponse>();
 
 export const onRequest: MiddlewareHandler = async (req, next) => {
   console.log("[Middleware] onRequest", req.url.pathname);
-
   let ttl: number | undefined;
   // Add a `cache` method to the `req.locals` object
   // that will allow us to set the cache duration for each page.
   req.locals.cache = (seconds: number) => {
     ttl = seconds;
   };
+
+  if (import.meta.env.DEV) {
+    return next();
+  }
 
   const cached = cache.get(req.url.pathname);
 

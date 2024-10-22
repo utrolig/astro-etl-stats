@@ -1,0 +1,30 @@
+---
+import { type Weapon } from "../../util/convertWeaponStats";
+import { getTotalKills, getTotalDeaths } from "../../util/weaponUtils.ts";
+import { getColoredNameParts } from "../../util/coloredNames.ts";
+
+interface Props {
+  name: string;
+  weaponStats: Weapon[];
+}
+
+const { name, weaponStats } = Astro.props;
+---
+
+<tr>
+  <td>
+    <details>
+      <summary>
+        {
+          getColoredNameParts(name).map(({ color, text }) => (
+            <span class="name-part" style={{ color }}>
+              {text}
+            </span>
+          ))
+        }
+        <td>{getTotalKills(weaponStats)}</td>
+        <td>{getTotalDeaths(weaponStats)}</td>
+      </summary>
+    </details>
+  </td>
+</tr>

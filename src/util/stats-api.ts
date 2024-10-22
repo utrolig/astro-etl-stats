@@ -5,17 +5,17 @@ const BASE_URL = "https://api.oksii.lol/api/v2/stats/etl";
 export const statsApi = {
   async fetchGroups() {
     const url = urlJoin(BASE_URL, "/matches/groups");
-    const data = await jsonFetch<Group[]>(url);
+    const data = await getJson<Group[]>(url);
     return data;
   },
   async fetchGroupDetails(groupId: number) {
     const url = urlJoin(BASE_URL, "/matches/groups", groupId.toString());
-    const data = await jsonFetch<GroupDetails>(url);
+    const data = await getJson<GroupDetails>(url);
     return data;
   },
 };
 
-async function jsonFetch<T>(...args: Parameters<typeof fetch>) {
+async function getJson<T>(...args: Parameters<typeof fetch>) {
   const response = await fetch(...args);
 
   if (!response.ok) {

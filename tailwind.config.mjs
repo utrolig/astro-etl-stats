@@ -1,5 +1,6 @@
 import tailwindForms from "@tailwindcss/forms";
 import defaultTheme from "tailwindcss/defaultTheme";
+import plugin from "tailwindcss/plugin";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -26,5 +27,14 @@ export default {
       },
     },
   },
-  plugins: [tailwindForms],
+  plugins: [
+    tailwindForms,
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        ".scrollbar-thin": {
+          "scrollbar-width": "thin",
+        },
+      });
+    }),
+  ],
 };

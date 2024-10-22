@@ -1,12 +1,10 @@
 ---
-import { aggregateRoundStats } from '../../../util/aggregateRoundStats'
 import Layout from '../../../layouts/Layout.astro'
 import MatchHeader from '@/components/match-header/match-header.astro'
 import { statsApi } from '../../../util/stats-api.ts'
 
 const { groupId } = Astro.params
 const data = await statsApi.fetchGroupDetails(Number(groupId))
-const teams = aggregateRoundStats(data)
 
 const oneHourInSeconds = 60 * 60
 

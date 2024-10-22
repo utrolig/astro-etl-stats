@@ -29,7 +29,7 @@ async function getJson<T>(...args: Parameters<typeof fetch>) {
 export type Group = {
   match_id: number;
   channel_name: string;
-  state: "waiting_report" | "finished" | "cancelled";
+  state: "waiting_report" | "finished" | "cancelled" | "unknown match";
   size: number;
   start_time: number;
   end_time: number;

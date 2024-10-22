@@ -1,5 +1,5 @@
 import { convertWeaponStats } from "./convertWeaponStats";
-import type { GroupDetails, GroupRound } from "./stats-api";
+import type { GroupDetails } from "./stats-api";
 
 type PlayerData = {
   id: string;

@@ -1,0 +1,41 @@
+html {
+  --etl-text-dark: 267 40% 10%;
+  --etl-text: 267 40% 10%;
+  --etl-bg: 249 88% 97%;
+  --etl-100: 249 87% 94%;
+  --etl-200: 251 86% 89%;
+  --etl-300: 253 80% 82%;
+  --etl-400: 258 79% 74%;
+  --etl-blue: 203 80% 82%;
+  --etl-pink: 303 80% 82%;
+  --etl-link: 258 49% 54%;
+  --etl-link-hover: 258 59% 44%;
+
+  scrollbar-color: hsl(var(--etl-300)) hsl(var(--etl-100));
+}
+
+html.dark {
+  color-scheme: dark;
+  --etl-text: 266 41% 90%;
+  --etl-bg: 262 22% 10%;
+  --etl-100: 253 26% 17%;
+  --etl-200: 263 39% 30%;
+  --etl-300: 260 44% 40%;
+  --etl-400: 258 39% 64%;
+  --etl-blue: 210 54% 30%;
+  --etl-pink: 310 44% 40%;
+  --etl-link: 258 55% 69%;
+  --etl-link-hover: 258 45% 76%;
+}
+
+.changing-theme,
+.changing-theme * {
+  transition: none !important;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}

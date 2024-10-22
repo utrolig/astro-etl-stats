@@ -13,6 +13,6 @@ const { group } = Astro.props
 
 <header class="grid grid-cols-matchHeader py-12">
   <TeamList team="Alpha" players={getPlayers('alpha', group)} />
-  <MatchResult maps={group.match.maps} />
+  <MatchResult result={{ alpha: 2, beta: 1 }} maps={group.match.maps} />
   <TeamList team="Beta" players={getPlayers('beta', group)} />
 </header>

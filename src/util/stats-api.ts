@@ -43,6 +43,33 @@ export type Group = {
   winner: "alpha" | "beta";
 };
 
+export type GroupRound = {
+  round_filename: string;
+  round_data: {
+    round_info: {
+      defenderteam: number;
+      servername: string;
+      matchID: string;
+      round: number;
+      nextTimeLimit: string;
+      timelimit: string;
+      mapname: string;
+      config: string;
+      winnerteam: number;
+    };
+    player_stats: Record<
+      string,
+      {
+        name: string;
+        rounds: string;
+        weaponStats: string[];
+        team: string;
+        guid: string;
+      }
+    >;
+  };
+};
+
 export type GroupDetails = {
   match: {
     match_id: number;
@@ -64,31 +91,6 @@ export type GroupDetails = {
       instance: string;
     };
     winner: "alpha" | "beta";
-    rounds: Array<{
-      round_filename: string;
-      round_data: {
-        round_info: {
-          defenderteam: number;
-          servername: string;
-          matchID: string;
-          round: number;
-          nextTimeLimit: string;
-          timelimit: string;
-          mapname: string;
-          config: string;
-          winnerteam: number;
-        };
-        player_stats: Record<
-          string,
-          {
-            name: string;
-            rounds: string;
-            weaponStats: string[];
-            team: string;
-            guid: string;
-          }
-        >;
-      };
-    }>;
+    rounds: GroupRound[];
   };
 };

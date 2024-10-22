@@ -9,6 +9,10 @@ import Layout from "../../layouts/Layout.astro";
 const { groupId } = Astro.params;
 const data = await statsApi.fetchGroupDetails(Number(groupId));
 const teams = aggregateRoundStats(data);
+
+const oneHourInSeconds = 60 * 60;
+
+Astro.locals.cache(oneHourInSeconds);
 ---
 
 <style>

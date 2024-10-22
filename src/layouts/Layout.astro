@@ -1,21 +1,23 @@
 ---
-import "@fontsource-variable/noto-sans/wght.css";
-import notoWoff2 from "@fontsource-variable/noto-sans/files/noto-sans-latin-wght-normal.woff2";
-import "@/assets/global.css";
-import ThemeScript from "@/components/theme-script/theme-script.astro";
+import '@fontsource-variable/noto-sans/wght.css'
+import '@/assets/global.css'
+import notoWoff2 from '@fontsource-variable/noto-sans/files/noto-sans-latin-wght-normal.woff2'
+import ThemeScript from '@/components/theme-script/theme-script.astro'
 interface Props {
-  title: string;
-  description?: string;
+  title: string
+  description?: string
 }
 
-const { title, description } = Astro.props;
+const { title, description } = Astro.props
+
+const desc = description ?? ''
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    {description && <meta name="description" content={description} />}
+    {desc && <meta name="description" content={description} />}
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={Astro.url} />
@@ -30,7 +32,7 @@ const { title, description } = Astro.props;
     <ThemeScript />
     <title>{title}</title>
   </head>
-  <body class="text-etl-text bg-etl-bg antialised">
+  <body class="bg-etl-bg text-etl-text antialiased">
     <slot />
-  </body>
-</html>
+  </body></html
+>

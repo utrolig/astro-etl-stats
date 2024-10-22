@@ -1,14 +1,14 @@
 ---
-import { type Weapon } from "../../util/convertWeaponStats";
-import { getTotalKills, getTotalDeaths } from "../../util/weaponUtils.ts";
-import { getColoredNameParts } from "../../util/coloredNames.ts";
+import { getTotalDeaths, getTotalKills } from '../../util/weaponUtils.ts'
+import { getColoredNameParts } from '../../util/coloredNames.ts'
+import { type Weapon } from '../../util/convertWeaponStats'
 
 interface Props {
-  name: string;
-  weaponStats: Weapon[];
+  name: string
+  weaponStats: Weapon[]
 }
 
-const { name, weaponStats } = Astro.props;
+const { name, weaponStats } = Astro.props
 ---
 
 <style>
@@ -18,12 +18,8 @@ const { name, weaponStats } = Astro.props;
     border-collapse: collapse;
   }
 
-  td {
+  td span {
     padding: 6px;
-  }
-
-  .name-part {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
   }
 </style>
 
@@ -31,9 +27,7 @@ const { name, weaponStats } = Astro.props;
   <td>
     {
       getColoredNameParts(name).map(({ color, text }) => (
-        <span class="name-part" style={{ color }}>
-          {text}
-        </span>
+        <span style={{ color }}>{text}</span>
       ))
     }
   </td>

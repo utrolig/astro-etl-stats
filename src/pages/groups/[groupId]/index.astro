@@ -1,17 +1,17 @@
 ---
-import { statsApi } from "../../../util/stats-api.ts";
-import { getMatchSize } from "../../../util/getMatchSize.ts";
-import { aggregateRoundStats } from "../../../util/aggregateRoundStats";
-import Layout from "../../../layouts/Layout.astro";
-import PlayerRow from "../../../components/player-row/player-row.astro";
+import { aggregateRoundStats } from '../../../util/aggregateRoundStats'
+import { getMatchSize } from '../../../util/getMatchSize.ts'
+import Layout from '../../../layouts/Layout.astro'
+import PlayerRow from '../../../components/player-row/player-row.astro'
+import { statsApi } from '../../../util/stats-api.ts'
 
-const { groupId } = Astro.params;
-const data = await statsApi.fetchGroupDetails(Number(groupId));
-const teams = aggregateRoundStats(data);
+const { groupId } = Astro.params
+const data = await statsApi.fetchGroupDetails(Number(groupId))
+const teams = aggregateRoundStats(data)
 
-const oneHourInSeconds = 60 * 60;
+const oneHourInSeconds = 60 * 60
 
-Astro.locals.cache(oneHourInSeconds);
+Astro.locals.cache(oneHourInSeconds)
 ---
 
 <style>
@@ -29,14 +29,6 @@ Astro.locals.cache(oneHourInSeconds);
   th {
     padding: 6px;
   }
-
-  .tables table {
-    margin-bottom: 24px;
-  }
-
-  .name-part {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
-  }
 </style>
 <Layout
   title={`ETL Stats - Group ${groupId}`}
@@ -44,7 +36,7 @@ Astro.locals.cache(oneHourInSeconds);
 >
   <main>
     <h1>Group {groupId}</h1>
-    <div class="tables">
+    <div class="mb-6">
       <table>
         <tr>
           <th>Match id</th>
@@ -52,7 +44,7 @@ Astro.locals.cache(oneHourInSeconds);
         </tr>
         <tr>
           <th>Maps</th>
-          <td>{data.match.maps.join(", ")}</td>
+          <td>{data.match.maps.join(', ')}</td>
         </tr>
         <tr>
           <th>Type</th>

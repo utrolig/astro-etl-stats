@@ -73,24 +73,24 @@ export type GroupRound = {
 export type GroupDetails = {
   match: {
     match_id: number;
-    channel_id: string;
-    channel_name: string;
+    channel_id: string | null;
+    channel_name: string | null;
     state: "waiting_report" | "finished" | "cancelled";
     size: number;
     alpha_team: Array<{ id: string; nick: string }>;
     beta_team: Array<{ id: string; nick: string }>;
-    ranks_start: Record<string, number>;
-    ranks_end: Record<string, number>;
+    ranks_start: Record<string, number> | null;
+    ranks_end: Record<string, number> | null;
     start_time: number;
     end_time: number;
     maps: string[];
     server: {
       ip: string;
       port: number;
-      pw: string;
+      pw: string | null;
       instance: string;
     };
-    winner: "alpha" | "beta";
+    winner: "alpha" | "beta" | null;
     rounds: GroupRound[];
   };
 };

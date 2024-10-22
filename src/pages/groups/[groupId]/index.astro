@@ -1,8 +1,7 @@
 ---
 import { aggregateRoundStats } from '../../../util/aggregateRoundStats'
-import { getMatchSize } from '../../../util/getMatchSize.ts'
 import Layout from '../../../layouts/Layout.astro'
-import PlayerRow from '../../../components/player-row/player-row.astro'
+import MatchHeader from '@/components/match-header/match-header.astro'
 import { statsApi } from '../../../util/stats-api.ts'
 
 const { groupId } = Astro.params
@@ -14,80 +13,9 @@ const oneHourInSeconds = 60 * 60
 Astro.locals.cache(oneHourInSeconds)
 ---
 
-<style>
-  main {
-    color: rgba(255, 255, 255, 0.8);
-  }
-  table,
-  td,
-  tr {
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-collapse: collapse;
-  }
-
-  td,
-  th {
-    padding: 6px;
-  }
-</style>
 <Layout
   title={`ETL Stats - Group ${groupId}`}
   description={`ETL Stats - Group ${groupId}`}
 >
-  <main>
-    <h1>Group {groupId}</h1>
-    <div class="mb-6">
-      <table>
-        <tr>
-          <th>Match id</th>
-          <td>{data.match.match_id}</td>
-        </tr>
-        <tr>
-          <th>Maps</th>
-          <td>{data.match.maps.join(', ')}</td>
-        </tr>
-        <tr>
-          <th>Type</th>
-          <td>{getMatchSize(data.match.size)}</td>
-        </tr>
-        <tr>
-          <th>State</th>
-          <td>{data.match.state}</td>
-        </tr>
-        <tr>
-          <th>Winner</th>
-          <td>{data.match.winner}</td>
-        </tr>
-        <tr>
-          <th>Channel name</th>
-          <td>{data.match.channel_name}</td>
-        </tr>
-      </table>
-
-      <table>
-        <tr>
-          <th>Alpha</th>
-          <th>Kills</th>
-          <th>Deaths</th>
-        </tr>
-        {
-          teams.alpha.players.map((player) => (
-            <PlayerRow name={player.name} weaponStats={player.weaponStats} />
-          ))
-        }
-      </table>
-      <table>
-        <tr>
-          <th>Beta</th>
-          <th>Kills</th>
-          <th>Deaths</th>
-        </tr>
-        {
-          teams.beta.players.map((player) => (
-            <PlayerRow name={player.name} weaponStats={player.weaponStats} />
-          ))
-        }
-      </table>
-    </div>
-  </main>
+  <MatchHeader group={data} />
 </Layout>

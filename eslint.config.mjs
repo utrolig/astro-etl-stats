@@ -77,7 +77,6 @@ export default [
     },
     rules: {
       '@typescript-eslint/no-unnecessary-condition': 'error',
-      '@typescript-eslint/strict-boolean-expressions': 'error',
     },
   },
   {

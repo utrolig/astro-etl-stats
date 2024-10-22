@@ -42,8 +42,8 @@ export const splitByColorDelimiters = (s: string) => s.split(/(?=\^.)/g)
 export const toColoredParts = (parts: string[]) =>
   parts.map((part) => {
     const text = part.replace(/\^./g, '')
-    const matches = part.match(/\^./)!
-    if (!matches.length) {
+    const matches: RegExpMatchArray | null = part.match(/\^./)
+    if (!matches?.length) {
       const textPart: TextPart = {
         color: '#ffffff',
         text,

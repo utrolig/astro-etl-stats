@@ -1,0 +1,12 @@
+---
+import type { Team } from '@/util/stats-api'
+
+interface Props {
+  maps: string[]
+  // result: Record<Team, number>
+}
+
+const { maps } = Astro.props
+---
+
+<div> {maps.map((map) => <span>{map}</span>)} </div>

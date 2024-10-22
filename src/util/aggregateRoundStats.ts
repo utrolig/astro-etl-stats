@@ -1,5 +1,5 @@
+import type { GroupDetails, Team } from './stats-api'
 import { convertWeaponStats } from './convertWeaponStats'
-import type { GroupDetails } from './stats-api'
 
 type PlayerData = {
   id: string
@@ -9,7 +9,7 @@ type PlayerData = {
 }
 
 type TeamData = {
-  name: 'alpha' | 'beta'
+  name: Team
   players: PlayerData[]
 }
 

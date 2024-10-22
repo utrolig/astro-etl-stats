@@ -27,6 +27,8 @@ async function getJson<T>(...args: Parameters<typeof fetch>) {
   return response.json() as Promise<T>
 }
 
+export type Team = 'alpha' | 'beta'
+
 export type Group = {
   match_id: number
   channel_name: string
@@ -41,7 +43,7 @@ export type Group = {
     pw: string
     instance: string
   }
-  winner: 'alpha' | 'beta'
+  winner: Team
 }
 
 export type GroupRound = {
@@ -71,6 +73,11 @@ export type GroupRound = {
   }
 }
 
+export type Player = {
+  id: string
+  nick: string
+}
+
 export type GroupDetails = {
   match: {
     match_id: number
@@ -78,8 +85,8 @@ export type GroupDetails = {
     channel_name: string | null
     state: 'waiting_report' | 'finished' | 'cancelled'
     size: number
-    alpha_team: Array<{ id: string; nick: string }>
-    beta_team: Array<{ id: string; nick: string }>
+    alpha_team: Player[]
+    beta_team: Player[]
     ranks_start: Record<string, number> | null
     ranks_end: Record<string, number> | null
     start_time: number
@@ -91,7 +98,7 @@ export type GroupDetails = {
       pw: string | null
       instance: string
     }
-    winner: 'alpha' | 'beta' | null
+    winner: Team | null
     rounds: GroupRound[]
   }
 }

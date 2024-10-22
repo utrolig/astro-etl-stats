@@ -1,0 +1,18 @@
+---
+import { getPlayers } from '@/util/get-players'
+import type { GroupDetails } from '@/util/stats-api'
+import MatchResult from '@/components/match-result/match-result.astro'
+import TeamList from '@/components/team-list/team-list.astro'
+
+interface Props {
+  group: GroupDetails
+}
+
+const { group } = Astro.props
+---
+
+<header class="grid grid-cols-matchHeader py-12">
+  <TeamList team="Alpha" players={getPlayers('alpha', group)} />
+  <MatchResult maps={group.match.maps} />
+  <TeamList team="Beta" players={getPlayers('beta', group)} />
+</header>

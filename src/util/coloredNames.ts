@@ -55,8 +55,12 @@ export const toColoredParts = (parts: string[]) =>
 
     const colorChar = colorCode.replace('^', '')
 
+    const textPartColor = colorMap.find(([chars]) =>
+      chars.includes(colorChar),
+    )![1]
+
     const textPart: TextPart = {
-      color: colorMap.find(([chars]) => chars.includes(colorChar))![1],
+      color: textPartColor,
       text,
     }
 

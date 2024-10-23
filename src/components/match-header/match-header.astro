@@ -15,6 +15,7 @@ const { group } = Astro.props
 <header class="relative grid grid-cols-matchHeader py-12">
   <MapsBackground maps={group.match.maps} />
   <TeamList team="Alpha" players={getPlayers('alpha', group)} />
-  <MatchResult maps={group.match.maps} result={{ alpha: 2, beta: 1 }} />
+  <MatchResult group={group} />
   <TeamList team="Beta" players={getPlayers('beta', group)} />
+  <div class="absolute inset-x-0 bottom-0 z-20 h-[2px] bg-etl-400"></div>
 </header>

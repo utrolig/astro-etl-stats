@@ -1,6 +1,7 @@
 ---
 import { getPlayers } from '@/util/get-players'
 import type { GroupDetails } from '@/util/stats-api'
+import MapsBackground from '@/components/maps-background/maps-background.astro'
 import MatchResult from '@/components/match-result/match-result.astro'
 import TeamList from '@/components/team-list/team-list.astro'
 
@@ -11,8 +12,9 @@ interface Props {
 const { group } = Astro.props
 ---
 
-<header class="grid grid-cols-matchHeader py-12">
+<header class="relative grid grid-cols-matchHeader py-12">
+  <MapsBackground maps={group.match.maps} />
   <TeamList team="Alpha" players={getPlayers('alpha', group)} />
-  <MatchResult result={{ alpha: 2, beta: 1 }} maps={group.match.maps} />
+  <MatchResult maps={group.match.maps} result={{ alpha: 2, beta: 1 }} />
   <TeamList team="Beta" players={getPlayers('beta', group)} />
 </header>

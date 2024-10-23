@@ -1,0 +1,43 @@
+---
+import { getMapImageUrl } from '@/util/getMapImage'
+
+interface Props {
+  maps: string[]
+}
+
+const { maps } = Astro.props
+
+const mapImages = maps.map(getMapImageUrl)
+
+const width = 100 / mapImages.length + 15
+
+const getClipPath = (idx: number) => {
+  if (idx === 0) {
+    return `polygon(0 0, 100% 0, 85% 100%, 0 100%)`
+  } else if (idx === mapImages.length - 1) {
+    return `polygon(15% 0, 100% 0, 100% 100%, 0 100%)`
+  }
+  return `polygon(15% 0, 100% 0, 85% 100%, 0 100%)`
+}
+
+const getImageStyle = (idx: number) => {
+  return {
+    clipPath: getClipPath(idx),
+    left: `${(91 / mapImages.length) * idx}%`,
+    width: `${width}%`,
+  }
+}
+---
+
+<div class="absolute inset-0 z-[2] overflow-hidden">
+  {
+    mapImages.map((image, idx) => (
+      <img
+        class="absolute h-full object-cover object-center"
+        src={image.src}
+        style={getImageStyle(idx)}
+      />
+    ))
+  }
+  <div class="absolute inset-0 z-[3] bg-black/50"></div>
+</div>

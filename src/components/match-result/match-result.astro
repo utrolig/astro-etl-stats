@@ -1,5 +1,4 @@
 ---
-import { getMapImageUrl } from '@/util/getMapImage'
 import type { Team } from '@/util/stats-api'
 
 interface Props {
@@ -8,57 +7,15 @@ interface Props {
 }
 
 const { maps } = Astro.props
-const mapUrls = maps.map(getMapImageUrl) as ImageMetadata[]
-
-const calculateClipPath = (isFirst: boolean, isLast: boolean) => {
-  if (isFirst) {
-    return `polygon(0 0, 100% 0, 85% 100%, 0 100%)`
-  } else if (isLast) {
-    return `polygon(15% 0, 100% 0, 100% 100%, 0 100%)`
-  }
-  return `polygon(15% 0, 100% 0, 85% 100%, 0 100%)`
-}
-
-const imageWidth = 100 / mapUrls.length
 ---
 
 <div class="relative z-10 flex flex-col items-center justify-center gap-4">
-  <div class="relative size-full overflow-hidden">
-    <div class="flex h-full">
-      {
-        mapUrls.map((url, index) => (
-          <div
-            class="absolute h-full"
-            style={{
-              width: `${imageWidth}%`,
-              marginLeft: index === 0 ? '0' : '-15%',
-              left: `${index * (imageWidth - 15)}%`,
-              zIndex: index,
-            }}
-          >
-            <div
-              class="size-full"
-              style={{
-                clipPath: calculateClipPath(
-                  index === 0,
-                  index === mapUrls.length - 1,
-                ),
-              }}
-            >
-              <img class="size-full object-cover" src={url.src} />
-            </div>
-          </div>
-        ))
-      }
-    </div>
-  </div>
   <div class="flex items-center gap-2 text-4xl font-bold">
     <p>3</p>
     <span>:</span>
     <p>2</p>
   </div>
-
-  <div class="flex flex-col items-center justify-center gap-1 text-sm">
+  <div class="flex flex-col items-center justify-center">
     {maps.map((map) => <span>{map}</span>)}
   </div>
 </div>

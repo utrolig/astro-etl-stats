@@ -1,6 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro'
 import MatchHeader from '@/components/match-header/match-header.astro'
+import { MatchTable } from '@/components/match-table/match-table'
 import { statsApi } from '../../../util/stats-api.ts'
 
 const { groupId } = Astro.params
@@ -16,4 +17,5 @@ Astro.locals.cache(oneHourInSeconds)
   description={`ETL Stats - Group ${groupId}`}
 >
   <MatchHeader group={data} />
+  <MatchTable group={data} />
 </Layout>

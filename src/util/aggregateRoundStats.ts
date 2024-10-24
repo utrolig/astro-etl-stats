@@ -1,14 +1,14 @@
 import type { GroupDetails, Team } from './stats-api'
-import { convertWeaponStats } from './convertWeaponStats'
+import { convertWeaponStats, type Weapon } from './convertWeaponStats'
 
-type PlayerData = {
+export type PlayerData = {
   id: string
   name: string
-  weaponStats: ReturnType<typeof convertWeaponStats>
+  weaponStats: Weapon[]
   team: string
 }
 
-type TeamData = {
+export type TeamData = {
   name: Team
   players: PlayerData[]
 }

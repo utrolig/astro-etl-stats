@@ -17,5 +17,5 @@ Astro.locals.cache(oneHourInSeconds)
   description={`ETL Stats - Group ${groupId}`}
 >
   <MatchHeader group={data} />
-  <MatchTable group={data} />
+  <MatchTable client:load group={data} />
 </Layout>

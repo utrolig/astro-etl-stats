@@ -6,10 +6,6 @@ import { statsApi } from '../../../util/stats-api.ts'
 
 const { groupId } = Astro.params
 const data = await statsApi.fetchGroupDetails(Number(groupId))
-
-const oneHourInSeconds = 60 * 60
-
-Astro.locals.cache(oneHourInSeconds)
 ---
 
 <Layout

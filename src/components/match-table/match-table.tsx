@@ -12,7 +12,7 @@ import {
 } from '@tanstack/solid-table'
 import { type Component, createEffect, createSignal, For } from 'solid-js'
 import { getColoredNameParts } from '@/util/coloredNames'
-import { getTotalKills } from '@/util/weaponUtils'
+import { getTotalDeaths, getTotalKills } from '@/util/weaponUtils'
 import type { GroupDetails } from '@/util/stats-api'
 
 const columns: ColumnDef<PlayerData>[] = [
@@ -46,6 +46,12 @@ const columns: ColumnDef<PlayerData>[] = [
     enableSorting: true,
     cell: (info) => info.getValue(),
     header: 'Kills',
+  },
+  {
+    accessorFn: (row) => getTotalDeaths(row.weaponStats),
+    enableSorting: true,
+    cell: (info) => info.getValue(),
+    header: 'Deaths',
   },
 ]
 

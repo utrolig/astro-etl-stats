@@ -1,4 +1,5 @@
 ---
+import { DateTime } from 'luxon'
 import { getMatchSize } from '../../util/getMatchSize.ts'
 import Layout from '../../layouts/Layout.astro'
 import { statsApi } from '../../util/stats-api'
@@ -6,18 +7,39 @@ const data = await statsApi.fetchGroups()
 ---
 
 <Layout title="ETL Stats">
-  <main>
-    <h1>Groups</h1>
-    <ul>
+  <main class="bg-etl-bg p-16">
+    <ul class="flex flex-col">
       {
-        data.map((group) => (
-          <li>
-            <a href={`/groups/${group.match_id}`}>
-              {group.match_id} - {getMatchSize(group.size)} -{' '}
-              {group.maps.join(', ')}
-            </a>
-          </li>
-        ))
+        data
+          .filter((group) => group.size > 5)
+          .filter(
+            (group) =>
+              group.state !== 'cancelled' && group.state !== 'waiting_report',
+          )
+          .map((group) => (
+            <li class="border-b border-solid border-b-etl-text/50 first:border-t">
+              <a
+                class="flex items-center gap-8 p-4 hover:bg-etl-bg-100"
+                href={`/groups/${group.match_id}`}
+              >
+                <div class="text-2xl font-bold">{getMatchSize(group.size)}</div>
+                <div class="flex flex-col gap-1">
+                  <div class="text-lg">
+                    Match {group.match_id}
+                    <span class="text-sm text-etl-text/50">
+                      Ended {DateTime.fromSeconds(group.end_time).toRelative()}
+                    </span>
+                  </div>
+                  <div class="text-xs text-etl-text/70">
+                    {group.alpha_team.join(' ')}
+                  </div>
+                  <div class="text-xs text-etl-text/70">
+                    {group.beta_team.join(' ')}
+                  </div>
+                </div>
+              </a>
+            </li>
+          ))
       }
     </ul>
   </main>

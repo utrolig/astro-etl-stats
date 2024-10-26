@@ -37,6 +37,8 @@ export type Group = {
   start_time: number
   end_time: number
   maps: string[]
+  alpha_team: string[]
+  beta_team: string[]
   server: {
     ip: string
     port: number

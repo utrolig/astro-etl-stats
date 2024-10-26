@@ -12,7 +12,11 @@ import {
 } from '@tanstack/solid-table'
 import { type Component, createEffect, createSignal, For } from 'solid-js'
 import { getColoredNameParts } from '@/util/coloredNames'
-import { getTotalDeaths, getTotalKills } from '@/util/weaponUtils'
+import {
+  getTotalDeaths,
+  getTotalHeadshots,
+  getTotalKills,
+} from '@/util/weaponUtils'
 import type { GroupDetails } from '@/util/stats-api'
 
 const columns: ColumnDef<PlayerData>[] = [
@@ -53,6 +57,18 @@ const columns: ColumnDef<PlayerData>[] = [
     cell: (info) => info.getValue(),
     header: 'Deaths',
   },
+  {
+    accessorFn: (row) => row.damageGiven,
+    enableSorting: true,
+    cell: (info) => info.getValue(),
+    header: 'Damage given',
+  },
+  {
+    accessorFn: (row) => getTotalHeadshots(row.weaponStats),
+    enableSorting: true,
+    cell: (info) => info.getValue(),
+    header: 'Headshots',
+  },
 ]
 
 export type MatchTableProps = {
@@ -66,9 +82,24 @@ export const MatchTable: Component<MatchTableProps> = (props) => {
     console.log('sorting', sorting())
   })
 
-  const table = createSolidTable({
+  const alphaTable = createSolidTable({
     get data() {
       return aggregateRoundStats(props.group).alpha.players
+    },
+    state: {
+      get sorting() {
+        return sorting()
+      },
+    },
+    columns,
+    onSortingChange,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+  })
+
+  const betaTable = createSolidTable({
+    get data() {
+      return aggregateRoundStats(props.group).beta.players
     },
     state: {
       get sorting() {
@@ -85,7 +116,7 @@ export const MatchTable: Component<MatchTableProps> = (props) => {
     <div class="p-2">
       <table>
         <thead>
-          <For each={table.getHeaderGroups()}>
+          <For each={alphaTable.getHeaderGroups()}>
             {(headerGroup) => (
               <tr>
                 <For each={headerGroup.headers}>
@@ -105,7 +136,7 @@ export const MatchTable: Component<MatchTableProps> = (props) => {
           </For>
         </thead>
         <tbody>
-          <For each={table.getSortedRowModel().rows}>
+          <For each={alphaTable.getSortedRowModel().rows}>
             {(row) => (
               <tr>
                 <For each={row.getVisibleCells()}>
@@ -123,7 +154,67 @@ export const MatchTable: Component<MatchTableProps> = (props) => {
           </For>
         </tbody>
         <tfoot>
-          <For each={table.getFooterGroups()}>
+          <For each={alphaTable.getFooterGroups()}>
+            {(footerGroup) => (
+              <tr>
+                <For each={footerGroup.headers}>
+                  {(header) => (
+                    <th>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.footer,
+                            header.getContext(),
+                          )}
+                    </th>
+                  )}
+                </For>
+              </tr>
+            )}
+          </For>
+        </tfoot>
+      </table>
+      <table>
+        <thead>
+          <For each={betaTable.getHeaderGroups()}>
+            {(headerGroup) => (
+              <tr>
+                <For each={headerGroup.headers}>
+                  {(header) => (
+                    <th>
+                      <div onClick={header.column.getToggleSortingHandler()}>
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                      </div>
+                    </th>
+                  )}
+                </For>
+              </tr>
+            )}
+          </For>
+        </thead>
+        <tbody>
+          <For each={betaTable.getSortedRowModel().rows}>
+            {(row) => (
+              <tr>
+                <For each={row.getVisibleCells()}>
+                  {(cell) => (
+                    <td>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </td>
+                  )}
+                </For>
+              </tr>
+            )}
+          </For>
+        </tbody>
+        <tfoot>
+          <For each={alphaTable.getFooterGroups()}>
             {(footerGroup) => (
               <tr>
                 <For each={footerGroup.headers}>

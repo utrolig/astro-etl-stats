@@ -11,3 +11,9 @@ export function getTotalDeaths(weapons: Weapon[]) {
     return totalDeaths + weapon.deaths
   }, 0)
 }
+
+export function getTotalHeadshots(weapons: Weapon[]) {
+  return weapons.reduce((totalHeadshots, weapon) => {
+    return totalHeadshots + weapon.headshots
+  }, 0)
+}

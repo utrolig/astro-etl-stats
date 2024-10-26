@@ -1,12 +1,25 @@
-import type { GroupDetails, Team } from './stats-api'
 import { convertWeaponStats, type Weapon } from './convertWeaponStats'
+import type { GroupDetails, Team } from './stats-api'
+
+export type PlayerStats = {
+  damageGiven: number
+  damageReceived: number
+  teamDamageGiven: number
+  teamDamageReceived: number
+  gibs: number
+  selfKills: number
+  teamKills: number
+  teamGibs: number
+  playtime: number
+  xp: number
+}
 
 export type PlayerData = {
   id: string
   name: string
   weaponStats: Weapon[]
   team: string
-}
+} & PlayerStats
 
 export type TeamData = {
   name: Team
@@ -34,11 +47,35 @@ export function aggregateRoundStats(group: GroupDetails) {
         let playerData = playersMap[playerId]
 
         if (!playerData) {
+          const wstatsLength = player.weaponStats.length
+          const wstats = player.weaponStats.map(Number)
+
+          const damageGiven = wstats[wstatsLength - 10] ?? 0
+          const damageReceived = wstats[wstatsLength - 9] ?? 0
+          const teamDamageGiven = wstats[wstatsLength - 8] ?? 0
+          const teamDamageReceived = wstats[wstatsLength - 7] ?? 0
+          const gibs = wstats[wstatsLength - 6] ?? 0
+          const selfKills = wstats[wstatsLength - 5] ?? 0
+          const teamKills = wstats[wstatsLength - 4] ?? 0
+          const teamGibs = wstats[wstatsLength - 3] ?? 0
+          const playtime = wstats[wstatsLength - 2] ?? 0
+          const xp = wstats[wstatsLength - 1] ?? 0
+
           playerData = playersMap[playerId] = {
             id: playerId,
             name: player.name,
             team: player.team,
             weaponStats: [],
+            damageGiven,
+            damageReceived,
+            teamDamageGiven,
+            teamDamageReceived,
+            gibs,
+            selfKills,
+            teamKills,
+            teamGibs,
+            playtime,
+            xp,
           }
         }
 
@@ -104,4 +141,33 @@ export function aggregateRoundStats(group: GroupDetails) {
   })
 
   return { alpha, beta }
+}
+
+function getPlayerStats(rawStats: string[]): PlayerStats {
+  const nums = rawStats.map(Number)
+  const numLength = nums.length
+
+  const damageGiven = nums[numLength - 10] ?? 0
+  const damageReceived = nums[numLength - 9] ?? 0
+  const teamDamageGiven = nums[numLength - 8] ?? 0
+  const teamDamageReceived = nums[numLength - 7] ?? 0
+  const gibs = nums[numLength - 6] ?? 0
+  const selfKills = nums[numLength - 5] ?? 0
+  const teamKills = nums[numLength - 4] ?? 0
+  const teamGibs = nums[numLength - 3] ?? 0
+  const playtime = nums[numLength - 2] ?? 0
+  const xp = nums[numLength - 1] ?? 0
+
+  return {
+    damageGiven,
+    damageReceived,
+    teamDamageGiven,
+    teamDamageReceived,
+    gibs,
+    selfKills,
+    teamKills,
+    teamGibs,
+    playtime,
+    xp,
+  }
 }

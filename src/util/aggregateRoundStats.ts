@@ -1,5 +1,5 @@
 import { convertWeaponStats, type Weapon } from './convertWeaponStats'
-import type { GroupDetails, GroupRound, Team } from './stats-api'
+import type { GroupDetails, Team } from './stats-api'
 
 export type PlayerStats = {
   damageGiven: number

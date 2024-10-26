@@ -1,5 +1,5 @@
 import { convertWeaponStats, type Weapon } from './convertWeaponStats'
-import type { GroupDetails, Team } from './stats-api'
+import type { GroupDetails, GroupRound, Team } from './stats-api'
 
 export type PlayerStats = {
   damageGiven: number
@@ -109,6 +109,12 @@ export function aggregateRoundStats(group: GroupDetails) {
             }
           })
 
+          playerStats.playtime = getSecondRoundPlaytime(
+            convertedPreviousPlayerStats.playtime,
+            playerStats.playtime,
+            previousRound.round_data.round_info.nextTimeLimit,
+            round.round_data.round_info.nextTimeLimit,
+          )
           playerStats.xp = playerStats.xp - convertedPreviousPlayerStats.xp
           playerStats.gibs =
             playerStats.gibs - convertedPreviousPlayerStats.gibs
@@ -175,4 +181,31 @@ function getPlayerStats(rawStats: string[]): PlayerStats {
     playtime,
     xp,
   }
+}
+
+function convertTimeToMinutes(time: string): number {
+  const [minutes, seconds] = time.split(':').map(Number)
+
+  const mins = minutes as number
+  const secs = seconds as number
+
+  return mins + secs / 60
+}
+
+function getSecondRoundPlaytime(
+  firstRoundPlaytimePercentage: number,
+  totalPlaytimePercentage: number,
+  firstRoundDuration: string,
+  secondRoundDuration: string,
+) {
+  const r1Percentage = firstRoundPlaytimePercentage
+  const r1Duration = convertTimeToMinutes(firstRoundDuration)
+  const r2Duration = convertTimeToMinutes(secondRoundDuration)
+  const totalDuration = r1Duration + r2Duration
+  const totalPercentage = totalPlaytimePercentage
+
+  const round2Percentage =
+    (totalPercentage * totalDuration - r1Percentage * r1Duration) / r2Duration
+
+  return (Math.round(round2Percentage * 100) / 100).toFixed(1)
 }

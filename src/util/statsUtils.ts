@@ -50,5 +50,11 @@ export function getTotalAccuracy(weaponStats: Weapon[]) {
 }
 
 export function getTotalTimePlayed(playerStats: PlayerStats[]) {
-  return playerStats[0]?.playtime
+  return playerStats[1]?.playtime
+  // const totalPercentage = playerStats.reduce(
+  //   (total, stat) => total + stat.playtime,
+  //   0,
+  // )
+  //
+  // return totalPercentage / playerStats.length
 }

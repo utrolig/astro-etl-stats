@@ -20,7 +20,6 @@ export function getMatchResult({ match }: GroupDetails): MatchResult {
     winner: match.winner,
   }
 
-  // Initialize map scores for all maps in the match
   match.maps.forEach((map) => {
     score.mapScores[map] = {
       alpha: 0,
@@ -28,23 +27,20 @@ export function getMatchResult({ match }: GroupDetails): MatchResult {
     }
   })
 
-  // Process each round
   match.rounds.forEach((round) => {
     const { winnerteam, mapname } = round.round_data.round_info
 
-    // Increment total score
     if (winnerteam === 1) {
-      score.beta += 1
-    } else if (winnerteam === 2) {
       score.alpha += 1
+    } else if (winnerteam === 2) {
+      score.beta += 1
     }
 
-    // Increment map-specific score
     if (score.mapScores[mapname]) {
       if (winnerteam === 1) {
-        score.mapScores[mapname].beta += 1
-      } else if (winnerteam === 2) {
         score.mapScores[mapname].alpha += 1
+      } else if (winnerteam === 2) {
+        score.mapScores[mapname].beta += 1
       }
     }
   })

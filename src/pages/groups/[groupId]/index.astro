@@ -1,4 +1,5 @@
 ---
+import { Awards } from '../../../components/awards/awards'
 import Layout from '../../../layouts/Layout.astro'
 import MatchHeader from '@/components/match-header/match-header.astro'
 import { MatchTable } from '@/components/match-table/match-table'
@@ -14,4 +15,5 @@ const data = await statsApi.fetchGroupDetails(Number(groupId))
 >
   <MatchHeader group={data} />
   <MatchTable client:load group={data} />
+  <Awards data={data} />
 </Layout>

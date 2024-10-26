@@ -11,6 +11,7 @@ import {
 } from '@/components/match-table/match-table.column-defs'
 import { aggregateRoundStats } from '@/util/aggregateRoundStats'
 import type { GroupDetails } from '@/util/stats-api'
+import { SectionSubTitle } from '@/components/section-sub-title/section-sub-title'
 import { TeamTable } from '@/components/team-table/team-table'
 
 export type MatchTableProps = {
@@ -54,7 +55,9 @@ export const MatchTable: Component<MatchTableProps> = (props) => {
 
   return (
     <div class="flex flex-col gap-4 bg-etl-bg p-8">
+      <SectionSubTitle>Alpha</SectionSubTitle>
       <TeamTable data={alphaTable} />
+      <SectionSubTitle>Beta</SectionSubTitle>
       <TeamTable data={betaTable} />
     </div>
   )

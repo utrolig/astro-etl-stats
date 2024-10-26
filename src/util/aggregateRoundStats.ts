@@ -28,8 +28,6 @@ export type TeamData = {
 }
 
 export function aggregateRoundStats(group: GroupDetails) {
-  const { rounds } = group.match
-
   const alpha: TeamData = {
     name: 'alpha',
     players: [],
@@ -40,8 +38,80 @@ export function aggregateRoundStats(group: GroupDetails) {
     players: [],
   }
 
-  const playersMap: Record<string, PlayerData> = {}
+  const playersMap = getGroupStats(group)
 
+  Object.values(playersMap).forEach((player) => {
+    if (player.team === '1') {
+      alpha.players.push(player)
+    } else {
+      beta.players.push(player)
+    }
+  })
+
+  return { alpha, beta }
+}
+
+function getPlayerStats(rawStats: string[]): PlayerStats {
+  const nums = rawStats.map(Number)
+  const numLength = nums.length
+
+  const damageGiven = nums[numLength - 10] ?? 0
+  const damageReceived = nums[numLength - 9] ?? 0
+  const teamDamageGiven = nums[numLength - 8] ?? 0
+  const teamDamageReceived = nums[numLength - 7] ?? 0
+  const gibs = nums[numLength - 6] ?? 0
+  const selfKills = nums[numLength - 5] ?? 0
+  const teamKills = nums[numLength - 4] ?? 0
+  const teamGibs = nums[numLength - 3] ?? 0
+  const playtime = nums[numLength - 2] ?? 0
+  const xp = nums[numLength - 1] ?? 0
+
+  return {
+    damageGiven,
+    damageReceived,
+    teamDamageGiven,
+    teamDamageReceived,
+    gibs,
+    selfKills,
+    teamKills,
+    teamGibs,
+    playtime,
+    xp,
+  }
+}
+
+function convertTimeToMinutes(time: string): number {
+  const [minutes, seconds] = time.split(':').map(Number)
+
+  const mins = minutes as number
+  const secs = seconds as number
+
+  return mins + secs / 60
+}
+
+function getSecondRoundPlaytime(
+  firstRoundPlaytimePercentage: number,
+  totalPlaytimePercentage: number,
+  firstRoundDuration: string,
+  secondRoundDuration: string,
+) {
+  const r1Percentage = firstRoundPlaytimePercentage
+  const r1Duration = convertTimeToMinutes(firstRoundDuration)
+  const r2Duration = convertTimeToMinutes(secondRoundDuration)
+  const totalDuration = r1Duration + r2Duration
+  const totalPercentage = totalPlaytimePercentage
+
+  const round2Percentage =
+    (totalPercentage * totalDuration - r1Percentage * r1Duration) / r2Duration
+
+  return Math.round(round2Percentage * 100) / 100
+}
+
+export type GroupStats = Record<string, PlayerData>
+
+export function getGroupStats(group: GroupDetails): GroupStats {
+  const { rounds } = group.match
+  const playersMap: Record<string, PlayerData> = {}
   rounds.forEach((round, idx) => {
     Object.entries(round.round_data.player_stats).forEach(
       ([playerId, player]) => {
@@ -143,69 +213,5 @@ export function aggregateRoundStats(group: GroupDetails) {
     )
   })
 
-  Object.values(playersMap).forEach((player) => {
-    if (player.team === '1') {
-      alpha.players.push(player)
-    } else {
-      beta.players.push(player)
-    }
-  })
-
-  return { alpha, beta }
-}
-
-function getPlayerStats(rawStats: string[]): PlayerStats {
-  const nums = rawStats.map(Number)
-  const numLength = nums.length
-
-  const damageGiven = nums[numLength - 10] ?? 0
-  const damageReceived = nums[numLength - 9] ?? 0
-  const teamDamageGiven = nums[numLength - 8] ?? 0
-  const teamDamageReceived = nums[numLength - 7] ?? 0
-  const gibs = nums[numLength - 6] ?? 0
-  const selfKills = nums[numLength - 5] ?? 0
-  const teamKills = nums[numLength - 4] ?? 0
-  const teamGibs = nums[numLength - 3] ?? 0
-  const playtime = nums[numLength - 2] ?? 0
-  const xp = nums[numLength - 1] ?? 0
-
-  return {
-    damageGiven,
-    damageReceived,
-    teamDamageGiven,
-    teamDamageReceived,
-    gibs,
-    selfKills,
-    teamKills,
-    teamGibs,
-    playtime,
-    xp,
-  }
-}
-
-function convertTimeToMinutes(time: string): number {
-  const [minutes, seconds] = time.split(':').map(Number)
-
-  const mins = minutes as number
-  const secs = seconds as number
-
-  return mins + secs / 60
-}
-
-function getSecondRoundPlaytime(
-  firstRoundPlaytimePercentage: number,
-  totalPlaytimePercentage: number,
-  firstRoundDuration: string,
-  secondRoundDuration: string,
-) {
-  const r1Percentage = firstRoundPlaytimePercentage
-  const r1Duration = convertTimeToMinutes(firstRoundDuration)
-  const r2Duration = convertTimeToMinutes(secondRoundDuration)
-  const totalDuration = r1Duration + r2Duration
-  const totalPercentage = totalPlaytimePercentage
-
-  const round2Percentage =
-    (totalPercentage * totalDuration - r1Percentage * r1Duration) / r2Duration
-
-  return Math.round(round2Percentage * 100) / 100
+  return playersMap
 }

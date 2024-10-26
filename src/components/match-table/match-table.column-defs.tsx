@@ -1,3 +1,4 @@
+import { For, Show } from 'solid-js'
 import {
   getKdr,
   getTotalAccuracy,
@@ -10,7 +11,6 @@ import {
   getTotalTimePlayed,
 } from '@/util/statsUtils'
 import type { ColumnDef } from '@tanstack/solid-table'
-import { For, Show } from 'solid-js'
 import { getColoredNameParts } from '@/util/coloredNames'
 import type { PlayerData } from '@/util/aggregateRoundStats'
 
@@ -79,9 +79,14 @@ export const matchTableColumnDefs: ColumnDef<PlayerData>[] = [
 
       const num = Number(val)
 
+      const formatted = val.toFixed(2)
+
       return (
-        <Show when={num > 1} fallback={<span class="text-red-700">{val}</span>}>
-          <span class="text-green-700">{val}</span>
+        <Show
+          when={num > 1}
+          fallback={<span class="text-red-700">{formatted}</span>}
+        >
+          <span class="text-green-700">{formatted}</span>
         </Show>
       )
     },
@@ -135,14 +140,14 @@ export const matchTableColumnDefs: ColumnDef<PlayerData>[] = [
     id: MATCH_TABLE_COLUMNS_IDS.REVIVES,
   },
   {
-    accessorFn: (row) => `${getTotalAccuracy(row.weaponStats)}%`,
+    accessorFn: (row) => `${getTotalAccuracy(row.weaponStats).toFixed(1)}%`,
     enableSorting: true,
     cell: (info) => info.getValue(),
     header: 'Acc',
     id: MATCH_TABLE_COLUMNS_IDS.ACCURACY,
   },
   {
-    accessorFn: (row) => `${getTotalTimePlayed(row.playerStats)}%`,
+    accessorFn: (row) => `${getTotalTimePlayed(row.playerStats).toFixed(1)}%`,
     enableSorting: true,
     cell: (info) => info.getValue(),
     header: 'TTP',

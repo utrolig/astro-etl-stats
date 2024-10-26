@@ -46,7 +46,7 @@ export function getTotalAccuracy(weaponStats: Weapon[]) {
   const totalHits = weaponStats.reduce((total, wpn) => total + wpn.hits, 0)
 
   const totalAcc = (totalHits / totalShots) * 100
-  return totalAcc.toFixed(1)
+  return totalAcc
 }
 
 export function getTotalTimePlayed(playerStats: PlayerStats[]) {
@@ -54,12 +54,17 @@ export function getTotalTimePlayed(playerStats: PlayerStats[]) {
     return total + stat.playtime
   }, 0)
 
-  return (totalPercentage / playerStats.length).toFixed(1)
+  return totalPercentage / playerStats.length
 }
 
 export function getKdr(weaponStats: Weapon[]) {
   const totalKills = getTotalKills(weaponStats)
   const totalDeaths = getTotalDeaths(weaponStats)
 
-  return (totalKills / totalDeaths).toFixed(2)
+  return totalKills / totalDeaths
+}
+
+export function getTotalSelfKills(playerStats: PlayerStats[]) {
+  const total = playerStats.reduce((total, stat) => total + stat.selfKills, 0)
+  return total
 }

@@ -32,7 +32,7 @@ export const TeamTable: Component<TeamTableProps> = (props) => {
       <div class="flex flex-col">
         <For each={props.data.getSortedRowModel().rows}>
           {(row) => (
-            <div class="grid grid-cols-matchTable gap-4 p-2 odd:bg-etl-100 even:bg-etl-200">
+            <div class="grid grid-cols-matchTable gap-4 p-2 odd:bg-etl-bg-200 even:bg-etl-bg-100">
               <For each={row.getVisibleCells()}>
                 {(cell) => (
                   <div

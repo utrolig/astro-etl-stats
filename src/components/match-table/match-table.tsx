@@ -53,7 +53,7 @@ export const MatchTable: Component<MatchTableProps> = (props) => {
   })
 
   return (
-    <div class="flex flex-col gap-4 p-6">
+    <div class="flex flex-col gap-4 bg-etl-bg p-8">
       <TeamTable data={alphaTable} />
       <TeamTable data={betaTable} />
     </div>

@@ -1,4 +1,5 @@
 import {
+  getKdr,
   getTotalAccuracy,
   getTotalDamageGiven,
   getTotalDamageReceived,
@@ -9,11 +10,12 @@ import {
   getTotalTimePlayed,
 } from '@/util/statsUtils'
 import type { ColumnDef } from '@tanstack/solid-table'
-import { For } from 'solid-js'
+import { For, Show } from 'solid-js'
 import { getColoredNameParts } from '@/util/coloredNames'
 import type { PlayerData } from '@/util/aggregateRoundStats'
 
 export const MATCH_TABLE_COLUMNS_IDS = {
+  KDR: 'kdr',
   NAME: 'name',
   KILLS: 'kills',
   DEATHS: 'deaths',
@@ -70,6 +72,23 @@ export const matchTableColumnDefs: ColumnDef<PlayerData>[] = [
     header: 'Name',
   },
   {
+    accessorFn: (row) => getKdr(row.weaponStats),
+    enableSorting: true,
+    cell: (info) => {
+      const val = info.getValue() as number
+
+      const num = Number(val)
+
+      return (
+        <Show when={num > 1} fallback={<span class="text-red-700">{val}</span>}>
+          <span class="text-green-700">{val}</span>
+        </Show>
+      )
+    },
+    header: 'KDR',
+    id: MATCH_TABLE_COLUMNS_IDS.KDR,
+  },
+  {
     accessorFn: (row) => getTotalKills(row.weaponStats),
     enableSorting: true,
     cell: (info) => info.getValue(),
@@ -86,14 +105,18 @@ export const matchTableColumnDefs: ColumnDef<PlayerData>[] = [
   {
     accessorFn: (row) => getTotalDamageGiven(row.playerStats),
     enableSorting: true,
-    cell: (info) => info.getValue(),
+    cell: (info) => (
+      <span class="text-green-700">{info.getValue() as string}</span>
+    ),
     header: 'Damage given',
     id: MATCH_TABLE_COLUMNS_IDS.DAMAGE_GIVEN,
   },
   {
     accessorFn: (row) => getTotalDamageReceived(row.playerStats),
     enableSorting: true,
-    cell: (info) => info.getValue(),
+    cell: (info) => (
+      <span class="text-red-700">{info.getValue() as string}</span>
+    ),
     header: 'Damage received',
     id: MATCH_TABLE_COLUMNS_IDS.DAMAGE_RECEIVED,
   },

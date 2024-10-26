@@ -207,5 +207,5 @@ function getSecondRoundPlaytime(
   const round2Percentage =
     (totalPercentage * totalDuration - r1Percentage * r1Duration) / r2Duration
 
-  return (Math.round(round2Percentage * 100) / 100).toFixed(1)
+  return Math.round(round2Percentage * 100) / 100
 }

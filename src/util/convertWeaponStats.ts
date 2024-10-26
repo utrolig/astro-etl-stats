@@ -28,7 +28,7 @@ export interface PlayerStats {
   has_stats: boolean
 }
 
-const weapon_stats: WeaponStats = {
+export const WEAPON_IDS: WeaponStats = {
   0: { name: 'Knife', has_headshots: false },
   1: { name: 'Ka-Bar', has_headshots: false },
   2: { name: 'Luger', has_headshots: true },
@@ -129,14 +129,14 @@ const weapon_stats: WeaponStats = {
     has_headshots: true,
   },
   27: { name: 'Syringe', has_headshots: false },
-}
+} as const
 
 export function convertWeaponStats(stats: number[]) {
   let argIndex = 1
 
   const weapons: Weapon[] = []
 
-  for (const k of Object.keys(weapon_stats)) {
+  for (const k of Object.keys(WEAPON_IDS)) {
     const weaponId = parseInt(k)
     const firstEntry = stats[0]
 
@@ -152,7 +152,7 @@ export function convertWeaponStats(stats: number[]) {
         kills: stats[argIndex++] as number,
         deaths: stats[argIndex++] as number,
         headshots: stats[argIndex++] as number,
-        name: weapon_stats[weaponId]?.name as string,
+        name: WEAPON_IDS[weaponId]?.name as string,
         acc: 0,
       }
 

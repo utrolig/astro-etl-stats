@@ -18,8 +18,9 @@ export type PlayerData = {
   id: string
   name: string
   weaponStats: Weapon[]
+  playerStats: PlayerStats[]
   team: string
-} & PlayerStats
+}
 
 export type TeamData = {
   name: Team
@@ -47,41 +48,20 @@ export function aggregateRoundStats(group: GroupDetails) {
         let playerData = playersMap[playerId]
 
         if (!playerData) {
-          const wstatsLength = player.weaponStats.length
-          const wstats = player.weaponStats.map(Number)
-
-          const damageGiven = wstats[wstatsLength - 10] ?? 0
-          const damageReceived = wstats[wstatsLength - 9] ?? 0
-          const teamDamageGiven = wstats[wstatsLength - 8] ?? 0
-          const teamDamageReceived = wstats[wstatsLength - 7] ?? 0
-          const gibs = wstats[wstatsLength - 6] ?? 0
-          const selfKills = wstats[wstatsLength - 5] ?? 0
-          const teamKills = wstats[wstatsLength - 4] ?? 0
-          const teamGibs = wstats[wstatsLength - 3] ?? 0
-          const playtime = wstats[wstatsLength - 2] ?? 0
-          const xp = wstats[wstatsLength - 1] ?? 0
-
           playerData = playersMap[playerId] = {
             id: playerId,
             name: player.name,
             team: player.team,
             weaponStats: [],
-            damageGiven,
-            damageReceived,
-            teamDamageGiven,
-            teamDamageReceived,
-            gibs,
-            selfKills,
-            teamKills,
-            teamGibs,
-            playtime,
-            xp,
+            playerStats: [],
           }
         }
 
         const convertedStats = convertWeaponStats(
           player.weaponStats.map(Number),
         )
+
+        const playerStats = getPlayerStats(player.weaponStats)
 
         const isFirstRound = round.round_data.round_info.round % 2
 
@@ -106,12 +86,15 @@ export function aggregateRoundStats(group: GroupDetails) {
             )
           }
 
-          const convertedPreviousStats = convertWeaponStats(
+          const convertedPreviousWeaponStats = convertWeaponStats(
             previousWeaponStats.map(Number),
           )
 
+          const convertedPreviousPlayerStats =
+            getPlayerStats(previousWeaponStats)
+
           convertedStats.forEach((stat) => {
-            const previousEntry = convertedPreviousStats.find(
+            const previousEntry = convertedPreviousWeaponStats.find(
               (ws) => ws.id === stat.id,
             )
 
@@ -125,8 +108,30 @@ export function aggregateRoundStats(group: GroupDetails) {
               stat.acc = stat.hits / stat.shots
             }
           })
+
+          playerStats.xp = playerStats.xp - convertedPreviousPlayerStats.xp
+          playerStats.gibs =
+            playerStats.gibs - convertedPreviousPlayerStats.gibs
+          playerStats.teamGibs =
+            playerStats.teamGibs - convertedPreviousPlayerStats.teamGibs
+          playerStats.selfKills =
+            playerStats.selfKills - convertedPreviousPlayerStats.selfKills
+          playerStats.teamKills =
+            playerStats.teamKills - convertedPreviousPlayerStats.teamKills
+          playerStats.damageGiven =
+            playerStats.damageGiven - convertedPreviousPlayerStats.damageGiven
+          playerStats.damageReceived =
+            playerStats.damageReceived -
+            convertedPreviousPlayerStats.damageReceived
+          playerStats.teamDamageGiven =
+            playerStats.teamDamageGiven -
+            convertedPreviousPlayerStats.teamDamageGiven
+          playerStats.teamDamageReceived =
+            playerStats.teamDamageReceived -
+            convertedPreviousPlayerStats.teamDamageReceived
         }
 
+        playerData.playerStats.push(playerStats)
         playerData.weaponStats.push(...convertedStats)
       },
     )

@@ -22,6 +22,9 @@ export default {
       },
       gridTemplateColumns: {
         matchHeader: '1fr auto 1fr',
+
+        matchTable:
+          'minmax(140px, 2fr) minmax(40px, 1fr) minmax(40px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr) minmax(60px, 1fr) minmax(50px, 1fr) minmax(50px, 1fr) minmax(60px, 1fr)',
       },
     },
   },

@@ -1,0 +1,4 @@
+- Add sorting indicator in table headers
+- Get proper images for all maps
+- Make it possible to expand each row
+- Add awards

@@ -176,6 +176,10 @@ export function getGroupStats(group: GroupDetails): GroupStats {
               stat.headshots = stat.headshots - previousEntry.headshots
 
               stat.acc = stat.hits / stat.shots
+
+              if (isNaN(stat.acc)) {
+                stat.acc = 0
+              }
             }
           })
 

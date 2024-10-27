@@ -55,7 +55,11 @@ export const matchTableColumnDefs: ColumnDef<PlayerData>[] = [
 
       return (
         <For each={parts}>
-          {({ text, color }) => <span style={{ color }}>{text}</span>}
+          {({ text, color }) => (
+            <span class="font-semibold" style={{ color }}>
+              {text}
+            </span>
+          )}
         </For>
       )
     },

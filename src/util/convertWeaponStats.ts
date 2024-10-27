@@ -156,7 +156,7 @@ export function convertWeaponStats(stats: number[]) {
         acc: 0,
       }
 
-      weapon.acc = weapon.shots > 0 ? (weapon.hits * 100) / weapon.shots : 0.0
+      weapon.acc = weapon.hits / weapon.shots
 
       weapons.push(weapon)
     }

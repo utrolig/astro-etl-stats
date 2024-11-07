@@ -18,6 +18,10 @@ const result = getMatchResult(group)
     <p>{result.beta}</p>
   </div>
   <div class="flex flex-col items-center justify-center">
-    {group.match.maps.map((map) => <span class="text-white">{map}</span>)}
+    {
+      group.match.maps.map((map) => (
+        <span class="text-sm text-white lg:text-lg">{map}</span>
+      ))
+    }
   </div>
 </div>

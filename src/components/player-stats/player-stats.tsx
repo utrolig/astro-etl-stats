@@ -19,6 +19,7 @@ export const PlayerStats: Component<PlayerStatsProps> = (props) => {
   const [sorting, onSortingChange] = createSignal<SortingState>([
     { id: 'kills', desc: true },
   ])
+
   const stableStats = createMemo(() => {
     return aggregateWeaponStats(props.data.weaponStats)
   })

@@ -11,11 +11,11 @@ const { players, team } = Astro.props
 ---
 
 <div class="z-10 flex flex-col items-center justify-center gap-6 text-xl">
-  <h3 class="text-xl font-bold text-white">{team}</h3>
+  <h3 class="text-sm font-bold text-white lg:text-xl">{team}</h3>
   <div class="flex flex-col items-center">
     {
       players.map((player) => (
-        <div>
+        <div class="text-sm lg:text-xl">
           {getColoredNameParts(player.nick).map((part) => (
             <span
               style={{

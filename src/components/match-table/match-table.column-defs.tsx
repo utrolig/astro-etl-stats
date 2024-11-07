@@ -115,46 +115,58 @@ export const matchTableColumnDefs: ColumnDef<PlayerData>[] = [
     accessorFn: (row) => getTotalDamageGiven(row.playerStats),
     enableSorting: true,
     cell: (info) => (
-      <span class="text-green-700">{info.getValue() as string}</span>
+      <span class="hidden text-green-700 lg:inline">
+        {info.getValue() as string}
+      </span>
     ),
-    header: 'Damage given',
+    header: () => <span class="hidden lg:inline">Damage given</span>,
     id: MATCH_TABLE_COLUMNS_IDS.DAMAGE_GIVEN,
   },
   {
     accessorFn: (row) => getTotalDamageReceived(row.playerStats),
     enableSorting: true,
     cell: (info) => (
-      <span class="text-red-700">{info.getValue() as string}</span>
+      <span class="hidden text-red-700 lg:inline">
+        {info.getValue() as string}
+      </span>
     ),
-    header: 'Damage received',
+    header: () => <span class="hidden lg:inline">Damage received</span>,
     id: MATCH_TABLE_COLUMNS_IDS.DAMAGE_RECEIVED,
   },
   {
     accessorFn: (row) => getTotalHeadshots(row.weaponStats),
     enableSorting: true,
-    cell: (info) => info.getValue(),
-    header: 'Headshots',
+    cell: (info) => (
+      <span class="hidden lg:inline">{info.getValue() as string}</span>
+    ),
+    header: () => <span class="hidden lg:inline">Headshots</span>,
     id: MATCH_TABLE_COLUMNS_IDS.HEADSHOTS,
   },
   {
     accessorFn: (row) => getTotalRevives(row.weaponStats),
     enableSorting: true,
-    cell: (info) => info.getValue(),
-    header: 'Revives',
+    cell: (info) => (
+      <span class="hidden lg:inline">{info.getValue() as string}</span>
+    ),
+    header: () => <span class="hidden lg:inline">Revives</span>,
     id: MATCH_TABLE_COLUMNS_IDS.REVIVES,
   },
   {
     accessorFn: (row) => `${getTotalAccuracy(row.weaponStats).toFixed(1)}%`,
     enableSorting: true,
-    cell: (info) => info.getValue(),
-    header: 'Acc',
+    cell: (info) => (
+      <span class="hidden lg:inline">{info.getValue() as string}</span>
+    ),
+    header: () => <span class="hidden lg:inline">Acc</span>,
     id: MATCH_TABLE_COLUMNS_IDS.ACCURACY,
   },
   {
     accessorFn: (row) => `${getTotalTimePlayed(row.playerStats).toFixed(1)}%`,
     enableSorting: true,
-    cell: (info) => info.getValue(),
-    header: 'TTP',
+    cell: (info) => (
+      <span class="hidden lg:inline">{info.getValue() as string}</span>
+    ),
+    header: () => <span class="hidden lg:inline">TMP</span>,
     id: MATCH_TABLE_COLUMNS_IDS.TIME_PLAYED,
   },
 ]

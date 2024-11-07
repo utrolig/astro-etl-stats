@@ -27,6 +27,8 @@ export default {
 
         matchTable:
           'minmax(140px, 2fr) minmax(40px, 1fr) minmax(40px, 1fr) minmax(40px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr) minmax(60px, 1fr) minmax(50px, 1fr) minmax(50px, 1fr) minmax(60px, 1fr)',
+        matchTableSm:
+          'minmax(100px, 2fr) 1fr 1fr 1fr minmax(100px, 1fr) minmax(100px, 1fr) minmax(60px, 1fr) minmax(50px, 1fr) minmax(50px, 1fr) minmax(60px, 1fr)',
         playerStats: '100px 60px 80px 40px 40px 40px',
       },
     },

@@ -14,7 +14,7 @@ export const TeamTable: Component<TeamTableProps> = (props) => {
     <div class="w-full">
       <For each={props.table.getHeaderGroups()}>
         {(headerGroup) => (
-          <div class="grid grid-cols-matchTable gap-4 p-2">
+          <div class="grid grid-cols-matchTableSm gap-4 p-2 lg:grid-cols-matchTable">
             <For each={headerGroup.headers}>
               {(header) => (
                 <div
@@ -38,7 +38,7 @@ export const TeamTable: Component<TeamTableProps> = (props) => {
               <div class="odd:bg-etl-bg-200 even:bg-etl-bg-100">
                 <Accordion.Item>
                   <Accordion.Trigger
-                    class="grid grid-cols-matchTable gap-4 p-2 "
+                    class="grid grid-cols-matchTableSm gap-4 p-2 lg:grid-cols-matchTable"
                     as="div"
                   >
                     <For each={row.getVisibleCells()}>

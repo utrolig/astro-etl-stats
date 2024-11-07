@@ -20,7 +20,6 @@ export type MatchTableProps = {
 }
 
 export const MatchTable: Component<MatchTableProps> = (props) => {
-  const [combineTeams, setCombineTeams] = createSignal(false)
   const [sorting, onSortingChange] = createSignal<SortingState>([
     { id: MATCH_TABLE_COLUMNS_IDS.KILLS, desc: true },
   ])
@@ -64,49 +63,16 @@ export const MatchTable: Component<MatchTableProps> = (props) => {
     getSortedRowModel: getSortedRowModel(),
   })
 
-  const combinedTable = createSolidTable({
-    get data() {
-      return allPlayerStats()
-    },
-    state: {
-      get sorting() {
-        return sorting()
-      },
-    },
-    columns: matchTableColumnDefs,
-    onSortingChange,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  })
-
   return (
     <div class="flex flex-col gap-4 bg-etl-bg p-8">
       <div class="flex flex-col gap-2">
-        <div class="flex items-center justify-between">
-          <SectionSubTitle>
-            <Show when={combineTeams()} fallback="Alpha">
-              Combined
-            </Show>
-          </SectionSubTitle>
-          <Toggle
-            label="Combine teams"
-            value={combineTeams()}
-            onChange={setCombineTeams}
-          />
-        </div>
-        <Show
-          when={!combineTeams()}
-          fallback={<TeamTable table={combinedTable} />}
-        >
-          <TeamTable table={alphaTable} />
-        </Show>
+        <SectionSubTitle>Alpha</SectionSubTitle>
+        <TeamTable table={alphaTable} />
       </div>
-      <Show when={!combineTeams()}>
-        <div class="flex flex-col gap-2">
-          <SectionSubTitle>Beta</SectionSubTitle>
-          <TeamTable table={betaTable} />
-        </div>
-      </Show>
+      <div class="flex flex-col gap-2">
+        <SectionSubTitle>Beta</SectionSubTitle>
+        <TeamTable table={betaTable} />
+      </div>
     </div>
   )
 }
